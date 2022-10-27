@@ -3,27 +3,27 @@ const aws = require("aws-sdk")
 
 const uploadController = {} //definicion del objeto
 const s3 = new aws.S3({
-  accessKeyId: process.env.accessKeyId,
-  secretAccessKey: process.env.secretAccessKey,
+  accessKeyId: process.env.AWSAccessKeyId,
+  secretAccessKey: process.env.AWSSecretKey,
 })
 
 uploadController.upload = async (req, res) => {
   console.log(req.files.foto.name)
   //const now = Date.now()
-  let path = ""
   const id = req.body.id
   const formato = req.body.formato
   const imagen = req.files.foto.data
-  const type = req.body.type
+  // const type = req.body.type
+  const path = `imgUpload/${id}.${formato}`
 
-  if (type == "logo") {
-    path = `Logos/${id}.${formato}`
-  } else {
-    path = `FotoPerfil/${id}.${formato}`
-  }
+  // if (type == "logo") {
+  //   path = `Logos/${id}.${formato}`
+  // } else {
+  //   path = `FotoPerfil/${id}.${formato}`
+  // }
 
   var paramPut = {
-    Bucket: "onechancebucketfinal",
+    Bucket: "azoromi-img",
     ContentType: "image/jpg",
     ACL: "public-read",
     Key: path, //Aca se coloca el nombre que va a aparecer en s3
